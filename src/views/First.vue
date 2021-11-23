@@ -10,7 +10,7 @@
     <p>-生年月日-</p>
     <select id="year" v-model="year">
       <option v-for="i in 101" :value="i + 1920" :key="i">
-        {{ (i + 1920) | nengo }}
+        {{ (i + 1920) | yearNumber }}
       </option>
     </select>
     <label for="year">年</label>
@@ -42,7 +42,7 @@ export default {
     };
   },
   filters: {
-    nengo(y) {
+    yearNumber(y) {
       let result;
       if (y > 2018) {
         result = `${y} (令和${y - 2018}年)`;

@@ -3,44 +3,49 @@
     <p>STEP1</p>
     <h1>お客様の情報を入力してください</h1>
     <p>-性別-</p>
-    <input type="radio" id="male" value="男性" v-model="gender" />
+    <input
+      type="radio"
+      id="male"
+      value="男性"
+      v-model="gender"
+      @change="selectGender"
+    />
     <label for="male">男性</label>
-    <input type="radio" id="female" value="女性" v-model="gender" />
+    <input
+      type="radio"
+      id="female"
+      value="女性"
+      v-model="gender"
+      @change="selectGender"
+    />
     <label for="male">女性</label>
     <p>-生年月日-</p>
-    <select id="year" v-model="year">
-      <option v-for="i in 101" :value="i + 1920" :key="i">
+    <select name="year" id="year" v-model="year" @change="selectYear">
+      <option v-for="(i, key) in 101" :value="i + 1920" :key="key">
         {{ (i + 1920) | yearNumber }}
       </option>
     </select>
     <label for="year">年</label>
-    <select id="month" v-model="month">
-      <option v-for="i in 12" :value="i" :key="i">
+    <select name="month" id="month" v-model="month" @change="selectMonth">
+      <option v-for="(i, key) in 12" :value="i" :key="key">
         {{ i }}
       </option>
     </select>
     <label for="month">月</label>
-    <select id="day" v-model="day">
-      <option v-for="i in 31" :value="i" :key="i">
+    <select name="day" id="day" v-model="day" @change="selectDay">
+      <option v-for="(i, key) in 31" :value="i" :key="key">
         {{ i }}
       </option>
     </select>
-    <label for="year">日</label><br /><br /><br /><br />
-    <router-link to="/second" class="next">次へ進む</router-link>
+    <label for="day">日</label><br /><br /><br /><br />
+    <router-link to="/second" class="next">次へ進む ＞</router-link>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "App",
-  data() {
-    return {
-      gender: "男性",
-      year: 1990,
-      month: 1,
-      day: 1,
-    };
-  },
   filters: {
     yearNumber(y) {
       let result;
@@ -56,6 +61,55 @@ export default {
       return result;
     },
   },
+  computed: {
+    ...mapState(["gender", "year", "month", "day"]),
+    gender: {
+      get() {
+        return this.$store.getters.gender;
+      },
+      set(value) {
+        this.$store.dispatch("selectGender", value);
+      },
+    },
+    year: {
+      get() {
+        return this.$store.getters.year;
+      },
+      set(value) {
+        this.$store.dispatch("selectYear", value);
+      },
+    },
+    month: {
+      get() {
+        return this.$store.getters.month;
+      },
+      set(value) {
+        this.$store.dispatch("selectMonth", value);
+      },
+    },
+    day: {
+      get() {
+        return this.$store.getters.day;
+      },
+      set(value) {
+        this.$store.dispatch("selectDay", value);
+      },
+    },
+  },
+  methods: {
+    selectGender() {
+      this.$store.commit("selectGender", this.gender);
+    },
+    selectYear() {
+      this.$store.dispatch("selectYear", this.year);
+    },
+    selectMonth() {
+      this.$store.dispatch("selectMonth", this.month);
+    },
+    selectDay() {
+      this.$store.dispatch("selectDay", this.day);
+    },
+  },
 };
 </script>
 
@@ -66,13 +120,5 @@ export default {
   padding: 16px 40px;
   text-decoration: none;
   border-radius: 5px;
-}
-.back {
-  background: rgb(8, 211, 86);
-  color: #fff;
-  padding: 16px 40px;
-  text-decoration: none;
-  border-radius: 5px;
-  margin-right: 30px;
 }
 </style>

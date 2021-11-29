@@ -5,11 +5,7 @@
     <p>-性別-</p>
     <p>{{ gender }}</p>
     <p>-生年月日-</p>
-    <p>
-      {{ $store.state.year }}年{{ $store.state.month }}月{{
-        $store.state.day
-      }}日
-    </p>
+    <p>{{ year }}年{{ month }}月{{ day }}日</p>
     <p>-現在、生命保険に加入されていますか？-</p>
     <p>{{ insurance }}</p>
     <p>

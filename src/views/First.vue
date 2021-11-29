@@ -21,19 +21,19 @@
     <label for="male">女性</label>
     <p>-生年月日-</p>
     <select name="year" id="year" v-model="year" @change="selectYear">
-      <option v-for="(i, key) in 101" :value="i + 1920" :key="key">
+      <option v-for="i in 101" :value="i + 1920" :key="i">
         {{ (i + 1920) | yearNumber }}
       </option>
     </select>
     <label for="year">年</label>
     <select name="month" id="month" v-model="month" @change="selectMonth">
-      <option v-for="(i, key) in 12" :value="i" :key="key">
+      <option v-for="i in 12" :value="i" :key="i">
         {{ i }}
       </option>
     </select>
     <label for="month">月</label>
     <select name="day" id="day" v-model="day" @change="selectDay">
-      <option v-for="(i, key) in 31" :value="i" :key="key">
+      <option v-for="i in 31" :value="i" :key="i">
         {{ i }}
       </option>
     </select>

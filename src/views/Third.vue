@@ -3,11 +3,42 @@
     <p>STEP3</p>
     <h1>ご相談内容をご記入ください</h1>
     <p>-ご相談内容-</p>
-    <textarea name="" id="" cols="100" rows="25"></textarea>
+    <textarea
+      name="consultationContent"
+      id="consultationContent"
+      cols="100"
+      rows="25"
+      v-model="consultationContent"
+      @change="enterConsultationContent"
+    ></textarea>
     <router-link to="/second" class="back">＜ 前へ戻る</router-link>
-    <router-link to="/result" class="next">次へ進む ＞</router-link>
+    <router-link to="/fourth" class="next">次へ進む ＞</router-link>
   </div>
 </template>
+
+<script>
+import { mapState } from "vuex";
+
+export default {
+  name: "App",
+  computed: {
+    ...mapState(["consultationContent"]),
+    consultationContent: {
+      get() {
+        return this.$store.getters.consultationContent;
+      },
+      set(value) {
+        this.$store.dispatch("enterConsultationContent", value);
+      },
+    },
+  },
+  methods: {
+    enterConsultationContent() {
+      this.$store.commit("enterConsultationContent", this.consultationContent);
+    },
+  },
+};
+</script>
 
 <style scoped>
 .next {

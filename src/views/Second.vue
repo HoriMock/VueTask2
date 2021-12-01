@@ -9,6 +9,7 @@
       value="はい"
       v-model="insurance"
       @click="question2 = true"
+      @change="selectInsurance"
     />
     <label for="yes">はい</label>
     <input
@@ -17,6 +18,7 @@
       value="いいえ"
       v-model="insurance"
       @click="question2 = true"
+      @change="selectInsurance"
     />
     <label for="no">いいえ</label>
     <p v-if="question2">
@@ -29,6 +31,7 @@
       v-model="recommendation"
       v-if="question2"
       @click="question3 = true"
+      @change="selectRecommendation"
     />
     <label for="yes" v-if="question2">はい</label>
     <input
@@ -38,6 +41,7 @@
       v-model="recommendation"
       v-if="question2"
       @click="question3 = true"
+      @change="selectRecommendation"
     />
     <label for="no" v-if="question2">いいえ</label>
     <p v-if="question3">
@@ -49,6 +53,7 @@
       value="はい"
       v-model="hospitalization"
       v-if="question3"
+      @change="selectHospitalization"
     />
     <label for="yes" v-if="question3">はい</label>
     <input
@@ -57,6 +62,7 @@
       value="いいえ"
       v-model="hospitalization"
       v-if="question3"
+      @change="selectHospitalization"
     />
     <label for="no" v-if="question3">いいえ</label><br /><br />
     <router-link to="/" class="back">＜ 前へ戻る</router-link>
@@ -65,16 +71,53 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "App",
   data() {
     return {
-      insurance: "はい",
-      recommendation: "はい",
-      hospitalization: "はい",
       question2: false,
       question3: false,
     };
+  },
+  computed: {
+    ...mapState(["insurance", "recommendation", "hospitalization"]),
+    insurance: {
+      get() {
+        return this.$store.getters.insurance;
+      },
+      set(value) {
+        this.$store.dispatch("selectInsurance", value);
+      },
+    },
+    recommendation: {
+      get() {
+        return this.$store.getters.recommendation;
+      },
+      set(value) {
+        this.$store.dispatch("selectRecommendation", value);
+      },
+    },
+    hospitalization: {
+      get() {
+        return this.$store.getters.hospitalization;
+      },
+      set(value) {
+        this.$store.dispatch("selectHospitalization", value);
+      },
+    },
+  },
+  methods: {
+    selectInsurance() {
+      this.$store.commit("selectInsurance", this.insurance);
+    },
+    selectRecommendation() {
+      this.$store.commit("selectRecommendation", this.recommendation);
+    },
+    selectHospitalization() {
+      this.$store.commit("selectHospitalization", this.hospitalization);
+    },
   },
 };
 </script>
